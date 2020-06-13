@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Task.Models.Student>
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <H2>
+            @Html.ActionLink(" اضافه طالب", "Create")
+        </H2>
+        <table class="table">
+            <tr>
+                <th>
+                    <p>الاسم</p>
+                </th>
+                <th>
+                    <p>تاريخ الميلاد </p>
+                </th>
+                <th>
+                    <p>المحافظه</p>
+                </th>
+                <th>
+                    <p> الحي</p>
+                </th>
+                <th>
+                    <p>الشعبه</p>
+
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                <p> @Html.DisplayFor(modelItem => item.Name)</p>
+            </td>
+            <td>
+                <p>
+                    @item.BirthDate.ToString("yyyy-MM-dd")
+                </p>
+            </td>
+            <td>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Governorate.Name)
+                </p>
+            </td>
+            <td>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Neighborhood.Name)
+                </p>
+            </td>
+            <td>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Field.Name)
+                </p>
+            </td>
+            <td>
+                @foreach (var x in item.StudentTeachers)
+                {
+                    <p>@x.Teacher.Name</p>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+            }
+
+        </table>
+    </div>
+</body>
+</html>
