@@ -20,9 +20,16 @@ namespace Task.Repository
             _db.SaveChanges();
         }
 
-        public IEnumerable<StudentTeacher> GetStudentTeachers(int stdId)
+        public IEnumerable<int> GetStudentTeachers(int stdId)
         {
-            throw new NotImplementedException();
+            var allstudent = _db.StudentTeachers.Where(a => a.StudentId == stdId).ToList();
+            List<int> TeacherIdList = new List<int>();
+            foreach (var studentTeacher in allstudent)
+            {
+                TeacherIdList.Add(studentTeacher.TeacherId);
+            }
+
+            return TeacherIdList;
         }
     }
 }

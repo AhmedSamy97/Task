@@ -10,6 +10,6 @@ namespace Task.Repository
    public interface IStudentTeacherRespository
    {
       void AddTeacherToStudent(StudentTeacher stdtTeacher);
-      IEnumerable<StudentTeacher> GetStudentTeachers(int stdId);
+      IEnumerable<int> GetStudentTeachers(int stdId);
    }
 }

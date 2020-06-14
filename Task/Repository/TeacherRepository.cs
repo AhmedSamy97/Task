@@ -18,5 +18,6 @@ namespace Task.Repository
         {
             return db.Teachers.ToList();
         }
+
     }
 }

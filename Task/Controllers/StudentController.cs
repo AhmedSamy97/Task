@@ -82,7 +82,8 @@ namespace Task.Controllers
             }
 
             Student student = repo.getByID(id.Value);
-            var teacher = trepo.getAll();
+            var TeacherIds = strepo.GetStudentTeachers(id.Value);
+            var StudentDate = new CreateStudent(){Student = student,TeacherId = TeacherIds};
             if (student == null)
             {
                 return HttpNotFound();
@@ -90,15 +91,16 @@ namespace Task.Controllers
             ViewBag.FieldId = new SelectList(frepo.getAll(), "ID", "Name", student.FieldId);
             ViewBag.GovernorateId = new SelectList(grepo.getAll(), "ID", "Name", student.GovernorateId);
             ViewBag.NeighborhoodId = new SelectList(nrepo.getAll(), "ID", "Name", student.NeighborhoodId);
-            return View(student);
+            ViewBag.StudentTeachers = new SelectList(trepo.getAll(), "ID", "Name");
+            return View(StudentDate);
         }
 
         // POST: Student/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Student student)
+        public ActionResult Edit(CreateStudent studentdata)
         {
-            var std = repo.getByID(student.ID);
+            var std = repo.getByID(studentdata.Student.ID);
             if (std == null)
             {
                 return HttpNotFound();
@@ -106,12 +108,12 @@ namespace Task.Controllers
 
             if (ModelState.IsValid)
             {
-                repo.Edit(student);
+                repo.Edit(studentdata);
                 return RedirectToAction("Index");
             }
-            ViewBag.FieldId = new SelectList(frepo.getAll(), "ID", "Name", student.FieldId);
-            ViewBag.GovernorateId = new SelectList(grepo.getAll(), "ID", "Name", student.GovernorateId);
-            return View(student);
+            ViewBag.FieldId = new SelectList(frepo.getAll(), "ID", "Name", studentdata.Student.FieldId);
+            ViewBag.GovernorateId = new SelectList(grepo.getAll(), "ID", "Name", studentdata.Student.GovernorateId);
+            return View(studentdata);
         }
 
         // GET: Student/Delete/5
